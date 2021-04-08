@@ -168,6 +168,31 @@ class FTSEntry(FTSModel):
 # Application Functions
 ##################
 
+# custom wrapper to redirect user to login page if they're trying to
+# access an admin-only page
+def login_required(fn):
+
+    # basically a wrapper that alters metadata to show the original function
+    # and not, in this case, the inner function, and also passes arguments
+    # from the original fn to the new function inner
+    @functools.wraps(fn)
+    def inner(*args, **kwargs):
+
+        # session is a flask object that behaves like a dict, but is really a
+        # signed cookie, and can be used to store information between requests
+        # 'logged_in' is a keyword with a possible True response
+        if session.get('logged_in'):
+            return fn(*args, **kwargs)
+
+        # redirect returns a Response object that redirects the client to the
+        # target location
+        # url_for generates a url for the given endpoint, next is an argument
+        # for the login method
+        # request.path -- the requested path as unicode
+        return redirect(url_for('login', next=request.path))
+
+    return inner
+
 # i have no idea what this function does yet and can't seem to figure it out
 # the only instance I have seen this used is in templates/includes/pagination.html
 @app.template_filter('clean_querystring')
