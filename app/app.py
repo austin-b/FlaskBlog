@@ -165,7 +165,7 @@ class FTSEntry(FTSModel):
 
 
 ##################
-# Random Functions I don't know how to classify
+# Application Functions
 ##################
 
 # i have no idea what this function does yet and can't seem to figure it out
