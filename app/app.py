@@ -240,6 +240,14 @@ def login():
     # the form for entering the password
     return render_template('login.html', next_url=next_url)
 
+@app.route('/logout/', methods=['GET', 'POST'])
+def logout():
+    if request.method == 'POST':
+        # clear the cookie
+        session.clear()
+        return redirect(url_for('login'))
+    return render_template('logout.html')
+
 ##################
 # App Initialization
 ##################
