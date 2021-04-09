@@ -161,6 +161,10 @@ class Entry(flask_db.Model):
         return Entry.select().where(Entry.published == True)
 
     @classmethod
+    def drafts(cls):
+        return Entry.select().where(Entry.published == False)
+
+    @classmethod
     def search(cls, query):
         # not sure why the if statement is the same as the expression,
         # this may be open for simplification (TODO)
