@@ -146,6 +146,20 @@ class Entry(flask_db.Model):
             fts_entry.content = search_content
             fts_entry.save()
 
+    # Class methods are like instance methods, except that instead of the instance
+    # of an object being passed as the first positional self argument, the class
+    # itself is passed as the first argument.
+    # from https://www.geeksforgeeks.org/classmethod-in-python/:
+    # - A class method is a method which is bound to the class and not the object of the class.
+    # - They have the access to the state of the class as it takes a class parameter
+    # that points to the class and not the object instance.
+    # - It can modify a class state that would apply across all the instances of the
+    # class. For example, it can modify a class variable that would be applicable
+    # to all the instances.
+    @classmethod
+    def public(cls):
+        return Entry.select().where(Entry.published == True)
+
 # FTS stands for Full Text Search, which is an extension of SQLite's virtual
 # table functionality
 # from https://sqlite.org/vtab.html
