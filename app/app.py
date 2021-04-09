@@ -160,6 +160,30 @@ class Entry(flask_db.Model):
     def public(cls):
         return Entry.select().where(Entry.published == True)
 
+    @classmethod
+    def search(cls, query):
+        # not sure why the if statement is the same as the expression,
+        # this may be open for simplification (TODO)
+        words = [word.strip() for word in query.split() if word.strip()]
+        if not words:
+            # return empty query
+            return Entry.select().where(Entry.id == 0)
+        else:
+            search = ' '.join(words)
+
+        # select -- selects all columns on Entry, and a score (the alias) to
+        # the rank of each entry in matching the search string
+        # .match - Generate a SQL expression representing a search for the given term or expression in the table.
+        # order_by(SQL('score')) -- when using aliases, you must call them using
+        # SQL(), which is a helper function that runs arbitrary SQL
+        return (Entry
+                .select(Entry, FTSEntry.rank().alias('score'))
+                .join(FTSEntry, on=(Entry.id == FTSEntry.docid))
+                .where(
+                    (Entry.published == True) &
+                    (FTSEntry.match(search)))
+                .order_by(SQL('score')))
+
 # FTS stands for Full Text Search, which is an extension of SQLite's virtual
 # table functionality
 # from https://sqlite.org/vtab.html
