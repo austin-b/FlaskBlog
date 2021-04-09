@@ -312,6 +312,19 @@ def drafts():
     query = Entry.drafts().order_by(Entry.timestamp.desc())
     return object_list('index.html', query)
 
+# in a flask route, anything <> is a variable and is passed on to the
+# function defining the route
+@app.route('/<slug>/')
+def detail(slug):
+    if session.get('logged_in'):
+        query = Entry.select()
+    else:
+        query = Entry.public()
+    # fairly self-defining  but I'm not sure what the 404 object is (TODO)
+    entry = get_object_or_404(query, Entry.slug == slug)
+    return render_template('detail.html', entry=entry)
+
+
 ##################
 # App Initialization
 ##################
