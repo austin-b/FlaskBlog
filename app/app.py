@@ -186,8 +186,8 @@ def login_required(fn):
 
         # redirect returns a Response object that redirects the client to the
         # target location
-        # url_for generates a url for the given endpoint, next is an argument
-        # for the login method
+        # url_for generates a url for the given endpoint, next is retrieved
+        # by the login method
         # request.path -- the requested path as unicode
         return redirect(url_for('login', next=request.path))
 
@@ -210,6 +210,35 @@ def clean_querystring(request_args, *keys_to_remove, **new_values):
 def not_found(exc):
     return Response('<h3>Not Found</h3>'), 404
 
+
+##################
+# Routes
+##################
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    next_url = request.args.get('next') or request.form.get('next')
+
+    # if the user is submitting the password for authentication
+    if request.method == 'POST' and request.form.get('password'):
+        # TODO: implement hashing algorithm
+        password = request.form.get('password')
+        if password == app.config['password']:
+            # set the value in the cookie
+            session['logged_in'] == True
+            # store the cookie for more than this session
+            session.permanent = True
+
+            # flashes a message to the next request that can only be
+            # retrieved by get_flashed_messages()
+            flash('You are now logged in.', 'success')
+            return redirect(next_url or url_for('index'))
+        else:
+            flash('Incorrect password.', 'danger')
+
+    # template has action="{{ url_for('login', next=next_url) }}" in
+    # the form for entering the password
+    return render_template('login.html', next_url=next_url)
 
 ##################
 # App Initialization
