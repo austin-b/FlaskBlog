@@ -306,6 +306,12 @@ def index():
     # variable paginate_by
     return object_list('index.html', query, search=search_query)
 
+@app.route('/drafts/')
+@login_required
+def drafts():
+    query = Entry.drafts().order_by(Entry.timestamp.desc())
+    return object_list('index.html', query)
+
 ##################
 # App Initialization
 ##################
