@@ -176,6 +176,8 @@ class Entry(flask_db.Model):
         # .match - Generate a SQL expression representing a search for the given term or expression in the table.
         # order_by(SQL('score')) -- when using aliases, you must call them using
         # SQL(), which is a helper function that runs arbitrary SQL
+        # TODO: check this specification out for more info on what is supported
+        # with match - http://sqlite.org/fts3.html#section_3
         return (Entry
                 .select(Entry, FTSEntry.rank().alias('score'))
                 .join(FTSEntry, on=(Entry.id == FTSEntry.docid))
@@ -285,6 +287,20 @@ def logout():
         session.clear()
         return redirect(url_for('login'))
     return render_template('logout.html')
+
+@app.route('/')
+def index():
+    search_query = request.args.get('q')
+    if search_query:
+        query = Entry.search(search_query)
+    else:
+        query = Entry.public().order_by(Entry.timestamp.desc())
+
+    # object_list retrieves a paginated list of object in the query
+    # and displays them using the template provided
+    # by default, it paginates by 20 but this can be specified by a
+    # variable paginate_by
+    return object_list('index.html', query, search=search_query)
 
 ##################
 # App Initialization
