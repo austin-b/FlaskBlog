@@ -105,6 +105,33 @@ class Entry(flask_db.Model):
     published = BooleanField(index=True)
     timestamp = DateTimeField(default=datetime.datetime.now, index=True)
 
+    @property
+    def html_content(self):
+
+        # used for code/syntax highlighting
+        # css_class -- name of css class used for div
+        hilite = CodeHiliteExtension(linenums=True, css_class='highlight')
+
+        # all the extensions found here:
+        # https://python-markdown.github.io/extensions/extra/
+        extras = ExtraExtension()
+
+        # utilizes the above extensions and converts the markdown to html
+        markdown_content = markdown(self.content, extensions=[hilite, extras])
+
+        # parse_html -- Parse HTML intelligently, rendering items on their own
+        # within block elements as full content (e.g. a video player)
+        # urlize_all -- constructs a simple link when provider is not found
+        oembed_content = parse_html(
+            markdown_content,
+            oembed_providers,
+            urlize_all=True,
+            maxwidth=app.config['SITE_WIDTH'])
+
+        # Markup returns a string that is ready to be safely inserted into
+        # an HTML document
+        return Markup(oembed_content)
+
     def save(self, *args, **kwargs):
         # replace the non-URL-friendly characters and put that in self.slug
         if not self.slug:
