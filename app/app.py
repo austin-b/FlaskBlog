@@ -339,6 +339,26 @@ def drafts():
     query = Entry.drafts().order_by(Entry.timestamp.desc())
     return object_list('index.html', query)
 
+# must be placed before detail view so that Flask does not interpret
+# create as a slug
+@app.route('/create/', methods=['GET', 'POST'])
+@login_required
+def create():
+    if request.method == 'POST':
+        if request.form.get('title') and request.form.get('content'):
+            entry = Entry.create(
+                title = request.form['title'],
+                content = request.form['content'],
+                published = request.form.get('published') or False)
+            flash('Entry created successfully.', 'success')
+            if entry.published:
+                return redirect(url_for('detail', slug=entry.slug))
+            else:
+                return redirect(url_for('edit', slug=entry.slug))
+        else:
+            flash('Title and content are required.', 'danger')
+    return render_template('create.html')
+
 # in a flask route, anything <> is a variable and is passed on to the
 # function defining the route
 @app.route('/<slug>/')
