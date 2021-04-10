@@ -10,4 +10,6 @@
 
 {% block entry_content %}{{ entry.content }}{% endblock %}
 
+{% entry_published %}{% if entry.published %}checked{% endif %}{% endblock %}
+
 {% block save_button %}Save changes{% endblock %}
