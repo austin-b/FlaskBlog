@@ -13,6 +13,7 @@
   <body>
     <nav>
       <a id='blog-name' href="{{ url_for('index') }}">Thomas<br>Bennett</a>
+      <hr>
       <ul>
         {% if session.logged_in %}
         <li><a href="{{ url_for('drafts') }}">drafts</a></li>
@@ -29,17 +30,16 @@
     </nav>
 
     <main>
-      {% for category, message in get_flashed_messages() %}
+      {% for message in get_flashed_messages() %}
         <div class="alert">
           <!-- aria-hidden is used for assistive reader technology to remove irrelevant things -->
-          <button type="button" class="close" aria-hidden="true">&times;</button>
           <p>{{ message }}</p>
         </div>
       {% endfor %}
 
       {% block page_header %}
         <div class="page-header">
-          <h1>{% block content_title %}{% endblock %}</h1>
+          <h2>{% block content_title %}{% endblock %}</h2>
         </div>
       {% endblock %}
 
