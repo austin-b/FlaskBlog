@@ -10,16 +10,23 @@
 }
 
 html {
-  background-color: #F5F0F6;
+  background-color: #D2D1D2;
   display: flex;
   justify-content: center;
 }
 
 body {
-  width: 650px;
+  width: 750px;
   display: inline-flex;
   justify-content: left;
   font-family: IBMPlexSans;
+}
+
+hr {
+  color: #08A4BD;
+  height: 3px;
+  background-color: #08A4BD;
+  border-style: none;
 }
 
 nav {
@@ -41,21 +48,56 @@ nav ul {
 
 nav a:link {
   text-decoration: none;
+  color: black;
 }
 
 nav a:visited {
   text-decoration: none;
+  color: black;
 }
 
 nav a:hover {
   text-decoration: none;
+  color: #08A4BD;;
 }
 
 nav a:active {
   text-decoration: none;
+  color: black;
+}
+
+#blog-name:hover {
+  color: black;
 }
 
 main {
   margin-top: 20px;
   width: 100%;
+}
+
+.index-entry-title:link {
+  text-decoration: none;
+  color: black;
+}
+
+.index-entry-title:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.index-entry-title:hover {
+  text-decoration: none;
+  color: #08A4BD;
+}
+
+#entry-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }

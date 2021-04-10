@@ -5,13 +5,13 @@
 {% block content_title %}Create entry{% endblock %}
 
 {% block content %}
-  <form action="{% block form_action %}{{ url_for('create') }}{% endblock %}" method="post">
+  <form id='entry-form' action="{% block form_action %}{{ url_for('create') }}{% endblock %}" method="post">
     <div class='form-group'>
       <label for="title">title</label>
-      <input id="title" name="title" type="text" value="{% block entry_title %}Title{% endblock %}">
+      <input id="title" name="title" type="text" value="{% block entry_title %}{% endblock %}">
     </div>
     <label for="content">content</label>
-    <textarea id="content" name="content" style="height: 300px;">{% block entry_content %}Content{% endblock %}</textarea>
+    <textarea id="content" name="content" style="height: 300px;">{% block entry_content %}{% endblock %}</textarea>
     <label>
       <input name="published" type="checkbox" value="y" {% block entry_published %}{% endblock %}> Published?
     </label>

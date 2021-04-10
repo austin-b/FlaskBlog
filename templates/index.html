@@ -7,7 +7,7 @@
 {% block content %}
   {% for entry in object_list %}
     <h3>
-      <a href="{% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
+      <a class='index-entry-title' href="{% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
         {{ entry.title }}
       </a>
     </h3>

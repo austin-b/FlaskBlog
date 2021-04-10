@@ -105,6 +105,7 @@ class Entry(flask_db.Model):
     published = BooleanField(index=True)
     timestamp = DateTimeField(default=datetime.datetime.now, index=True)
 
+    # TODO: prerender jinja tags before markdown
     @property
     def html_content(self):
 
