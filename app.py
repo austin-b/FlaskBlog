@@ -296,7 +296,7 @@ def login():
         password = request.form.get('password')
         if password == app.config['ADMIN_PASSWORD']:
             # set the value in the cookie
-            session['logged_in'] == True
+            session['logged_in'] = True
             # store the cookie for more than this session
             session.permanent = True
 
