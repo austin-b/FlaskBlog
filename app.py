@@ -158,9 +158,7 @@ class Entry(flask_db.Model):
 
         # check to see if there's already an FTSEntry for this article
         try:
-            # previously this had docid instead of rowid, but this (http://docs.peewee-orm.com/en/latest/peewee/sqlite_ext.html#FTSModel)
-            # there is an automatically created rowid
-            fts_entry = FTSEntry.get(FTSEntry.rowid == self.id)
+            fts_entry = FTSEntry.get(FTSEntry.docid == self.id)
 
         # if there's not one, create it
         except FTSEntry.DoesNotExist:
