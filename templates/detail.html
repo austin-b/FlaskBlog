@@ -12,5 +12,7 @@
 
 {% block content %}
   <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %I:%M%p') }}</p>
-  {{ entry.html_content }}
+  <div class="entry-detail-content">
+    {{ entry.html_content }}
+  </div>
 {% endblock %}

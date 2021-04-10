@@ -1,3 +1,8 @@
+:root {
+  --accent: #266DD3;
+  --text-color: #E7ECEF;
+}
+
 @font-face {
   font-family: IBMPlexSans;
   src: url(/static/fonts/IBMPlexSans-Regular.ttf);
@@ -10,28 +15,34 @@
 }
 
 html {
-  background-color: #D2D1D2;
+  background-color: #E7ECEF;
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  min-height: 100%;
 }
 
 body {
-  width: 750px;
-  display: inline-flex;
+  max-width: 750px;
+  background-color: #1F0318;
+  display: flex;
+  flex-direction: row;
   justify-content: left;
+  flex-grow: 1;
   font-family: IBMPlexSans;
+  color: #E7ECEF;
 }
 
 hr {
-  color: #08A4BD;
+  color: var(--accent);
   height: 3px;
-  background-color: #08A4BD;
+  background-color: var(--accent);
   border-style: none;
 }
 
 nav {
   margin-top: 30px;
-  margin-left: 5px;
+  margin-left: 30px;
   margin-right: 15px;
 }
 
@@ -48,46 +59,58 @@ nav ul {
 
 nav a:link {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 nav a:visited {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 nav a:hover {
   text-decoration: none;
-  color: #08A4BD;;
+  color: var(--accent);
 }
 
 nav a:active {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 #blog-name:hover {
-  color: black;
+  color: var(--accent);
 }
 
 main {
   margin-top: 20px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 30px;
+}
+
+.content {
+  flex-grow: 1;
 }
 
 .index-entry-title:link {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 .index-entry-title:visited {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 .index-entry-title:hover {
   text-decoration: none;
-  color: #08A4BD;
+  color: var(--accent);
+}
+
+.index-entry-created {
+  font-size: 12px;
 }
 
 #entry-form {
@@ -95,9 +118,17 @@ main {
   flex-direction: column;
 }
 
+.entry-detail-content {
+  text-align: justify;
+}
+
 .form-group {
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+}
+
+footer {
+  font-size: 15px;
 }
