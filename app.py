@@ -294,7 +294,7 @@ def login():
     if request.method == 'POST' and request.form.get('password'):
         # TODO: implement hashing algorithm
         password = request.form.get('password')
-        if password == app.config['password']:
+        if password == app.config['ADMIN_PASSWORD']:
             # set the value in the cookie
             session['logged_in'] == True
             # store the cookie for more than this session
@@ -319,7 +319,7 @@ def logout():
         return redirect(url_for('login'))
     return render_template('logout.html')
 
-@app.route('/')
+@app.route('/index')
 def index():
     search_query = request.args.get('q')
     if search_query:
