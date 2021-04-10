@@ -398,7 +398,7 @@ def edit(slug):
 def main():
     # create tables if they don't already exist
     database.create_tables([Entry, FTSEntry])
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 # hooo
 if __name__ == '__main__':
