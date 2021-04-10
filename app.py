@@ -317,7 +317,7 @@ def logout():
         return redirect(url_for('login'))
     return render_template('logout.html')
 
-@app.route('/index')
+@app.route('/')
 def index():
     search_query = request.args.get('q')
     if search_query:
