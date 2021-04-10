@@ -1,6 +1,9 @@
 :root {
-  --accent: #266DD3;
+  /*--accent: #008080;*/
+  --accent: #3E7CB1;
   --text-color: #E7ECEF;
+  --background-color: #E7ECEF;
+  --body-color: #333333;
 }
 
 @font-face {
@@ -15,7 +18,7 @@
 }
 
 html {
-  background-color: #E7ECEF;
+  background-color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -24,13 +27,15 @@ html {
 
 body {
   max-width: 750px;
-  background-color: #1F0318;
+  background-color: var(--body-color);
   display: flex;
   flex-direction: row;
   justify-content: left;
   flex-grow: 1;
   font-family: IBMPlexSans;
-  color: #E7ECEF;
+  color: var(--text-color);
+  border-radius: 12px;
+  box-shadow: 10px 10px 5px grey;
 }
 
 hr {
@@ -90,6 +95,12 @@ main {
   padding-right: 30px;
 }
 
+.alert {
+  background-color: var(--accent);
+  border-radius: 5px;
+  text-align: center;
+}
+
 .content {
   flex-grow: 1;
 }
@@ -120,6 +131,19 @@ main {
 
 .entry-detail-content {
   text-align: justify;
+}
+
+.entry-detail-content a:link {
+  color: var(--text-color);
+}
+
+.entry-detail-content a:visited {
+  color: var(--text-color);
+}
+
+.entry-detail-content a:hover {
+  text-decoration: none;
+  color: var(--accent);
 }
 
 .form-group {

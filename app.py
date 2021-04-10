@@ -318,6 +318,7 @@ def logout():
         return redirect(url_for('login'))
     return render_template('logout.html')
 
+# TODO: display first 100 characters or so of article
 @app.route('/')
 def index():
     search_query = request.args.get('q')

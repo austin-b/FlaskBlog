@@ -11,6 +11,7 @@
         {{ entry.title }}
       </a>
     </h3>
+    <p class='index-entry-summary'>{{ entry.content[:100] }}</p>
     <p class='index-entry-created'>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
   {% else %}
     <p>No entries have been created yet.</p>
