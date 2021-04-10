@@ -371,6 +371,27 @@ def detail(slug):
     entry = get_object_or_404(query, Entry.slug == slug)
     return render_template('detail.html', entry=entry)
 
+@app.route('/<slug>/edit/', methods=['GET', 'POST'])
+@login_required
+def edit(slug):
+    entry = get_object_or_404(Entry, Entry.slug == slug)
+    if request.method == 'POST':
+        if request.form.get('title') and request.form.get('content'):
+            entry.title = request.form['title']
+            entry.content = request.form['content']
+            entry.published = request.form.get('published') or False
+            entry.save()
+
+            flash('Entry saved successfully.', 'success')
+            if entry.published:
+                return redirect(url_for('detail', slug=entry.slug))
+            else:
+                return redirect(url_for('edit', slug=entry.slug))
+        else:
+            flash('Title and content are required.', 'danger')
+
+    return render_template('edit.html', entry=entry)
+
 
 ##################
 # App Initialization
