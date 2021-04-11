@@ -1,0 +1,158 @@
+:root {
+  /*--accent: #008080;*/
+  --accent: #3E7CB1;
+  --text-color: #E7ECEF;
+  --background-color: #E7ECEF;
+  --body-color: #333333;
+}
+
+@font-face {
+  font-family: IBMPlexSans;
+  src: url(/static/fonts/IBMPlexSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: IBMPlexSans;
+  src: url(/static/fonts/IBMPlexSans-Bold.ttf);
+  font-weight: bold;
+}
+
+html {
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+body {
+  max-width: 750px;
+  background-color: var(--body-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  flex-grow: 1;
+  font-family: IBMPlexSans;
+  color: var(--text-color);
+  border-radius: 12px;
+  box-shadow: 10px 10px 5px grey;
+}
+
+hr {
+  color: var(--accent);
+  height: 3px;
+  background-color: var(--accent);
+  border-style: none;
+}
+
+nav {
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 15px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-top: 0px;
+}
+
+#blog-name {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+nav a:link {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+nav a:visited {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+nav a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+nav a:active {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+#blog-name:hover {
+  color: var(--accent);
+}
+
+main {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 30px;
+}
+
+.alert {
+  background-color: var(--accent);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.index-entry-title:link {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.index-entry-title:visited {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.index-entry-title:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.index-entry-created {
+  font-size: 12px;
+}
+
+#entry-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-detail-content {
+  text-align: justify;
+}
+
+.entry-detail-content a:link {
+  color: var(--text-color);
+}
+
+.entry-detail-content a:visited {
+  color: var(--text-color);
+}
+
+.entry-detail-content a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.form-group {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  font-size: 15px;
+}

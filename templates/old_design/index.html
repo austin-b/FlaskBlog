@@ -7,12 +7,11 @@
 {% block content %}
   {% for entry in object_list %}
     <h3>
-      <a class='index-entry-title' href="{% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
+      <a href="{% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
         {{ entry.title }}
       </a>
     </h3>
-    <p class='index-entry-summary'>{{ entry.content[:100] }}</p>
-    <p class='index-entry-created'>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+    <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
   {% else %}
     <p>No entries have been created yet.</p>
   {% endfor %}
