@@ -279,7 +279,7 @@ def clean_querystring(request_args, *keys_to_remove, **new_values):
 # errorhandler - Register a function to handle errors by code or exception class.
 @app.errorhandler(404)
 def not_found(exc):
-    return Response('<h3>Not Found</h3>'), 404
+    return Response(render_template('404.html')), 404
 
 
 ##################
