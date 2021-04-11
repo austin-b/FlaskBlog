@@ -81,6 +81,7 @@ oembed_providers = bootstrap_basic(OEmbedCache())
 # Databse Classes
 ##################
 
+# TODO: create and display tags for each entry
 # creates a model class for the entry table
 class Entry(flask_db.Model):
 
@@ -105,6 +106,7 @@ class Entry(flask_db.Model):
     published = BooleanField(index=True)
     timestamp = DateTimeField(default=datetime.datetime.now, index=True)
 
+    # TODO: prerender jinja tags before markdown
     @property
     def html_content(self):
 
@@ -317,6 +319,7 @@ def logout():
         return redirect(url_for('login'))
     return render_template('logout.html')
 
+# TODO: display first 100 characters or so of article
 @app.route('/')
 def index():
     search_query = request.args.get('q')
