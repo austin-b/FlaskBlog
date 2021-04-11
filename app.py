@@ -81,6 +81,7 @@ oembed_providers = bootstrap_basic(OEmbedCache())
 # Databse Classes
 ##################
 
+# TODO: create and display tags for each entry
 # creates a model class for the entry table
 class Entry(flask_db.Model):
 
