@@ -49,8 +49,8 @@ DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'blog.db')
 DEBUG = False
 
 # used by flask to encrypt the session cookie
-# TODO: Do I need to change this in the future?
-SECRET_KEY = "secret"
+# random value obtained from os.urandom
+SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
 
 SITE_WIDTH = 800
 
