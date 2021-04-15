@@ -11,8 +11,11 @@
         {{ entry.title }}
       </a>
     </h3>
-    <p class='index-entry-created'>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
-  {% else %}
+    <div class="index-entry-info">
+      <p>{{ entry.summary }}</p>
+      <p class='index-entry-created'>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+    </div>
+    {% else %}
     <p>No entries have been created yet.</p>
   {% endfor %}
   {% include "includes/pagination.html" %}
