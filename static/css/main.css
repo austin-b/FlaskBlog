@@ -26,6 +26,26 @@ body {
   box-shadow: 10px 10px 5px grey;
 }
 
+a:link {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+a:visited {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+a:active {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
 hr {
   color: var(--accent);
   height: 3px;
@@ -51,26 +71,6 @@ nav ul {
   font-family: Merriweather, serif;
   font-weight: bold;
   font-size: 24px;
-}
-
-nav a:link {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-nav a:visited {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-nav a:hover {
-  text-decoration: none;
-  color: var(--accent);
-}
-
-nav a:active {
-  text-decoration: none;
-  color: var(--text-color);
 }
 
 #blog-name:hover {
@@ -102,21 +102,6 @@ main {
 
 .index-entry-title {
   font-family: Merriweather;
-}
-
-.index-entry-title:link {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-.index-entry-title:visited {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-.index-entry-title:hover {
-  text-decoration: none;
-  color: var(--accent);
 }
 
 .index-entry-info {

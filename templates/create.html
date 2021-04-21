@@ -17,7 +17,7 @@
     </label>
     <div class='form-group'>
       <button type="submit">{% block save_button %}Create{% endblock %}</button>
-      <a href="{{ url_for('index') }}">Cancel</a>
+      <a href="{% block cancel_button %}{{ url_for('index') }}{% endblock %}">Cancel</a>
     </div>
   </form>
 {% endblock %}
