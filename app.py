@@ -5,7 +5,7 @@
 #
 # TODO: login via api post request only
 # TODO: add functionality to upload markdown file to database after login
-#
+# TODO: add functionality to delete entry
 
 
 
@@ -419,6 +419,13 @@ def edit(slug):
 
     return render_template('edit.html', entry=entry)
 
+@app.route('/upload/', methods=['POST'])
+@login_required
+def upload():
+    if request.files:
+        return {'file_uploaded': True}, 201
+    else:
+        return {'file_uploaded': False}, 400
 
 ##################
 # App Initialization
