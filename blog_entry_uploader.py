@@ -20,9 +20,11 @@ def check_status_code(status_code):
         raise Exception("status code " + str(status_code) + ": discontinuing script")
 
 # TODO: add title and published flag to request
-def upload_file(filename, session_cookie):
+def upload_file(filename, title, published=False):
     with open(filename, 'rb') as file:
-        upload_response = requests.post(URL + '/upload/', headers=HEADERS, cookies=session_cookie, files={'uploaded_file': file})
+        files = {'uploaded_file': ('test_file.md', file)}
+        upload_payload = {'title': title, 'published': published}
+        upload_response = requests.post(URL + '/upload/', headers=HEADERS, cookies=session_cookie, files=files, data=upload_payload)
     check_status_code(upload_response.status_code)
 
 # TODO: change when uploading website
@@ -43,4 +45,4 @@ check_status_code(login_response.status_code)
 
 session_cookie = dict(session=login_response.cookies['session'])
 
-upload_file('test_file.md', session_cookie)
+upload_file('test_file.md', title='Test Title #4', published=False)

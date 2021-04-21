@@ -366,8 +366,6 @@ def drafts():
     query = Entry.drafts().order_by(Entry.timestamp.desc())
     return object_list('index.html', query)
 
-# must be placed before detail view so that Flask does not interpret
-# create as a slug
 @app.route('/create/', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -385,6 +383,39 @@ def create():
         else:
             flash('Title and content are required.', 'danger')
     return render_template('create.html')
+
+# Uploads a markdown file with headers from the blog_entry_uploader.py script
+@app.route('/upload/', methods=['POST'])
+@login_required
+def upload():
+    try:
+        # ensure we are only uploading from the script
+        assert(request.headers.get('User-Agent') == app.config['UPLOADER_USER_AGENT'])
+
+        title = request.form.get('title')
+
+        # cannot seem to find a better way to convert the string boolean into boolean
+        published = True if request.form.get('published') == 'True' else False
+
+        # opens the file in the request as a temporary file
+        file = request.files['uploaded_file']
+        # INFO: https://docs.python.org/3/library/tempfile.html#tempfile-examples
+        file.stream.seek(0)
+
+        # do not know if we are currently working on ascii only or on unicode
+        content = file.stream.read().decode('ascii')
+
+        entry = Entry.create(
+            title = title,
+            content = content,
+            published = published)
+
+        # code 201 -- requested resource has been created
+        return {'file_uploaded': True}, 201
+
+    except:
+        # code 400 -- bad request
+        return {'file_uploaded': False}, 400
 
 # in a flask route, anything <> is a variable and is passed on to the
 # function defining the route
@@ -418,14 +449,6 @@ def edit(slug):
             flash('Title and content are required.', 'danger')
 
     return render_template('edit.html', entry=entry)
-
-@app.route('/upload/', methods=['POST'])
-@login_required
-def upload():
-    if request.files:
-        return {'file_uploaded': True}, 201
-    else:
-        return {'file_uploaded': False}, 400
 
 ##################
 # App Initialization
