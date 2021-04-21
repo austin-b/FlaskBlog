@@ -42,7 +42,6 @@ def login():
     global SESSION_COOKIE
     SESSION_COOKIE = dict(session=login_response.cookies['session'])
 
-# TODO: add title and published flag to request
 def upload_file(filename, title, published=False):
     with open(filename, 'rb') as file:
         files = {'uploaded_file': ('test_file.md', file)}
