@@ -3,6 +3,10 @@
 # A simple blogging platform based on
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
 #
+# TODO: login via api post request only
+# TODO: add functionality to upload markdown file to database after login
+#
+
 
 
 ##################
