@@ -41,7 +41,7 @@ from playhouse.sqlite_ext import *
 # Configs
 ##################
 
-# TODO: change to a one-way hash
+# REVIEW: change if not utilizing https
 ADMIN_PASSWORD = 'secret'
 
 # os.path.realpath - Return the canonical path of the specified filename, eliminating any symbolic links encountered in the path
@@ -112,7 +112,6 @@ class Entry(flask_db.Model):
     published = BooleanField(index=True)
     timestamp = DateTimeField(default=datetime.datetime.now, index=True)
 
-    # TODO: prerender jinja tags before markdown
     @property
     def html_content(self):
 
@@ -222,7 +221,7 @@ class Entry(flask_db.Model):
         # .match - Generate a SQL expression representing a search for the given term or expression in the table.
         # order_by(SQL('score')) -- when using aliases, you must call them using
         # SQL(), which is a helper function that runs arbitrary SQL
-        # TODO: check this specification out for more info on what is supported
+        # NOTE: check this specification out for more info on what is supported
         # with match - http://sqlite.org/fts3.html#section_3
         return (Entry
                 .select(Entry, FTSEntry.rank().alias('score'))
@@ -307,7 +306,6 @@ def login():
 
     # if the user is submitting the password for authentication
     if request.method == 'POST' and request.form.get('password'):
-        # TODO: implement hashing algorithm
         password = request.form.get('password')
         if password == app.config['ADMIN_PASSWORD']:
             # set the value in the cookie
