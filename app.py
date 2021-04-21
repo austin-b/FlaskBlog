@@ -94,6 +94,8 @@ class Entry(flask_db.Model):
     # we're using this to create a URL-friendly version of the title
     slug = CharField(unique=True)
 
+    summary = CharField()
+
     # Field class for storing text.
     content = TextField()
 
@@ -142,6 +144,8 @@ class Entry(flask_db.Model):
             # [^\w]+ - matches one or more of the preceding
             self.slug = re.sub('[^\w]+', '-', self.title.lower())
 
+        self.update_summary()
+
         # this explicity puts the super() arguments Entry, self when you can
         # just say super()
         # saves the Entry instance into the database
@@ -152,6 +156,13 @@ class Entry(flask_db.Model):
 
         # returns number of rows modified
         return ret
+
+    # creates a basic 100 character summary
+    def update_summary(self):
+        matches = re.findall('[A-Za-z\s\,\.]+[^<*>]\w+', self.content[:200])
+        print(matches)
+        match = " ".join(matches)
+        self.summary = match[:100]
 
     # updates the FTSEntry table used for fast searching of all articles
     def update_search_index(self):
@@ -319,7 +330,6 @@ def logout():
         return redirect(url_for('login'))
     return render_template('logout.html')
 
-# TODO: display first 100 characters or so of article
 @app.route('/')
 def index():
     search_query = request.args.get('q')

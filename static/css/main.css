@@ -122,7 +122,8 @@ main {
   color: var(--accent);
 }
 
-.index-entry-created {
+.index-entry-info {
+  padding-left: 15px;
   font-size: 12px;
 }
 
