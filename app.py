@@ -58,6 +58,8 @@ SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
 
 SITE_WIDTH = 800
 
+UPLOADER_USER_AGENT = 'tommy/post-uploader'
+
 app = Flask(__name__)
 
 # my best guess is that this is importing the config variables from this
@@ -269,12 +271,15 @@ def login_required(fn):
         if session.get('logged_in'):
             return fn(*args, **kwargs)
 
-        # redirect returns a Response object that redirects the client to the
-        # target location
-        # url_for generates a url for the given endpoint, next is retrieved
-        # by the login method
-        # request.path -- the requested path as unicode
-        return redirect(url_for('login', next=request.path))
+        if request.headers.get('User-Agent') == app.config['UPLOADER_USER_AGENT']:
+            return {'logged_in': False}, 403
+        else:
+            # redirect returns a Response object that redirects the client to the
+            # target location
+            # url_for generates a url for the given endpoint, next is retrieved
+            # by the login method
+            # request.path -- the requested path as unicode
+            return redirect(url_for('login', next=request.path))
 
     return inner
 
@@ -313,16 +318,25 @@ def login():
             # store the cookie for more than this session
             session.permanent = True
 
-            # flashes a message to the next request that can only be
-            # retrieved by get_flashed_messages()
-            flash('You are now logged in.', 'success')
-            return redirect(next_url or url_for('index'))
+            if request.headers.get('User-Agent') == app.config['UPLOADER_USER_AGENT']:
+                return {'logged_in': True}, 200
+            else:
+                # flashes a message to the next request that can only be
+                # retrieved by get_flashed_messages()
+                flash('You are now logged in.', 'success')
+                return redirect(next_url or url_for('index'))
         else:
-            flash('Incorrect password.', 'danger')
+            if request.headers.get('User-Agent') == app.config['UPLOADER_USER_AGENT']:
+                return {'logged_in': False}, 403
+            else:
+                flash('Incorrect password.', 'danger')
 
-    # template has action="{{ url_for('login', next=next_url) }}" in
-    # the form for entering the password
-    return render_template('login.html', next_url=next_url)
+    if request.headers.get('User-Agent') == app.config['UPLOADER_USER_AGENT']:
+        return {'logged_in': False}, 403
+    else:
+        # template has action="{{ url_for('login', next=next_url) }}" in
+        # the form for entering the password
+        return render_template('login.html', next_url=next_url)
 
 @app.route('/logout/', methods=['GET', 'POST'])
 def logout():
