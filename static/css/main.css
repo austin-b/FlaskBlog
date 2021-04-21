@@ -84,7 +84,6 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding-right: 30px;
 }
 
 .alert {
@@ -156,4 +155,22 @@ main {
 
 footer {
   font-size: 15px;
+}
+
+@media (max-width:600px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+  }
+
+  nav {
+    position: static;
+    margin-left: 10px;
+  }
+
+  main {
+    margin-left: 10px;
+    width: 95%;
+  }
 }
