@@ -43,5 +43,4 @@ check_status_code(login_response.status_code)
 
 session_cookie = dict(session=login_response.cookies['session'])
 
-
 upload_file('test_file.md', session_cookie)
