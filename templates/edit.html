@@ -15,3 +15,9 @@
 {% block save_button %}Save changes{% endblock %}
 
 {% block cancel_button %}{{ url_for('detail', slug=entry.slug) }}{% endblock %}
+
+{% block delete_button %}
+<form id='delete-form' action="{{ url_for('delete', slug=entry.slug)}}" method="post">
+    <button type="submit">Delete</button>
+</form>
+{% endblock %}

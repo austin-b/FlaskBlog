@@ -84,6 +84,7 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  margin-right: 30px;
 }
 
 .alert {
@@ -156,6 +157,7 @@ footer {
 
   main {
     margin-left: 10px;
-    width: 95%;
+    width: 90%;
+    margin-right: 0px;
   }
 }

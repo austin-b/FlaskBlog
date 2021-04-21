@@ -3,7 +3,6 @@
 # A simple blogging platform based on
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
 #
-# TODO: add functionality to delete entry
 
 
 
@@ -186,6 +185,21 @@ class Entry(flask_db.Model):
         else:
             fts_entry.content = search_content
             fts_entry.save()
+
+    # wrapper for super delete_instance
+    def delete_instance(self, *args, **kwargs):
+
+        ret = super(Entry, self).delete_instance(*args, **kwargs)
+
+        self.delete_search_index()
+
+        return ret
+
+    def delete_search_index(self):
+
+        fts_entry = FTSEntry.get(FTSEntry.docid == self.id)
+
+        fts_entry.delete_instance()
 
     # Class methods are like instance methods, except that instead of the instance
     # of an object being passed as the first positional self argument, the class
@@ -447,6 +461,22 @@ def edit(slug):
             flash('Title and content are required.', 'danger')
 
     return render_template('edit.html', entry=entry)
+
+@app.route('/<slug>/delete/', methods=['POST'])
+@login_required
+def delete(slug):
+    entry = get_object_or_404(Entry, Entry.slug == slug)
+
+    try:
+        entry.delete_instance()
+
+        flash('Entry deleted.', 'success')
+
+        return redirect(url_for('index'))
+    except:
+        flash('Entry not deleted.', 'danger')
+
+        return redirect(url_for('edit', slug=slug))
 
 ##################
 # App Initialization
