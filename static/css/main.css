@@ -5,17 +5,6 @@
   --body-color: #333333;
 }
 
-@font-face {
-  font-family: IBMPlexSans;
-  src: url(/static/fonts/IBMPlexSans-Regular.ttf);
-}
-
-@font-face {
-  font-family: IBMPlexSans;
-  src: url(/static/fonts/IBMPlexSans-Bold.ttf);
-  font-weight: bold;
-}
-
 html {
   background-color: var(--background-color);
   display: flex;
@@ -31,7 +20,7 @@ body {
   flex-direction: row;
   justify-content: left;
   flex-grow: 1;
-  font-family: IBMPlexSans;
+  font-family: 'IBM Plex Sans', sans-serif;
   color: var(--text-color);
   border-radius: 12px;
   box-shadow: 10px 10px 5px grey;
@@ -59,6 +48,7 @@ nav ul {
 }
 
 #blog-name {
+  font-family: Merriweather, serif;
   font-weight: bold;
   font-size: 24px;
 }
@@ -103,8 +93,16 @@ main {
   text-align: center;
 }
 
+.page-header {
+  font-family: Merriweather;
+}
+
 .content {
   flex-grow: 1;
+}
+
+.index-entry-title {
+  font-family: Merriweather;
 }
 
 .index-entry-title:link {
