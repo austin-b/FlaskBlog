@@ -55,6 +55,7 @@ SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
 
 SITE_WIDTH = 800
 
+# user agent used by blog_entry_uploader.py
 UPLOADER_USER_AGENT = 'tommy/post-uploader'
 
 app = Flask(__name__)
