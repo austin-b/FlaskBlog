@@ -179,6 +179,9 @@ class Entry(flask_db.Model):
         # returning for basic debug
         return (new_tag_count, new_entrytag_count)
 
+    def get_tags(self):
+        return [tag.tag.title for tag in self.tags]
+
     # creates a basic 100 character summary
     def update_summary(self):
         matches = re.findall('[A-Za-z\s\,\.]+[^<*>]\w+', self.content[:200])
@@ -487,6 +490,11 @@ def edit(slug):
             entry.published = request.form.get('published') or False
             entry.save()
 
+            tags = [t.strip() for t in request.form['tags'].split(',')]
+            (new_tags, new_entrytags) = entry.add_tags(*tags)
+
+            flash(str(new_tags) + " new tags were created." )
+            flash(str(new_entrytags) + " new entry tag relationships were created." )
             flash('Entry saved successfully.', 'success')
             if entry.published:
                 return redirect(url_for('detail', slug=entry.slug))

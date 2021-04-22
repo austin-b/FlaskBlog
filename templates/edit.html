@@ -12,6 +12,8 @@
 
 {% block entry_published %}{% if entry.published %}checked{% endif %}{% endblock %}
 
+{% block entry_tags %}{{ ", ".join(entry.get_tags() )}}{% endblock %}
+
 {% block save_button %}Save changes{% endblock %}
 
 {% block cancel_button %}{{ url_for('detail', slug=entry.slug) }}{% endblock %}
