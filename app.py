@@ -160,6 +160,25 @@ class Entry(flask_db.Model):
         # returns number of rows modified
         return ret
 
+    def add_tags(self, *args):
+        new_tag_count = 0
+        new_entrytag_count = 0
+        for t in args:
+            # returns a tuple of model instance and boolean showing whether or
+            # not the entry was created
+            (tag, tag_created) = Tag.get_or_create(title = t)
+
+            if tag_created:
+                new_tag_count += 1
+
+            (_, entrytag_created) = EntryTag.get_or_create(entry = self, tag = tag)
+
+            if entrytag_created:
+                new_entrytag_count += 1
+
+        # returning for basic debug
+        return (new_tag_count, new_entrytag_count)
+
     # creates a basic 100 character summary
     def update_summary(self):
         matches = re.findall('[A-Za-z\s\,\.]+[^<*>]\w+', self.content[:200])
@@ -400,6 +419,10 @@ def create():
                 content = request.form['content'],
                 published = request.form.get('published') or False)
             flash('Entry created successfully.', 'success')
+            tags = [t.strip() for t in request.form['tags'].split(',')]
+            (new_tags, new_entrytags) = entry.add_tags(*tags)
+            flash(str(new_tags) + " new tags were created." )
+            flash(str(new_entrytags) + " new entry tag relationships were created." )
             if entry.published:
                 return redirect(url_for('detail', slug=entry.slug))
             else:
@@ -496,7 +519,7 @@ def delete(slug):
 
 def main():
     # create tables if they don't already exist
-    database.create_tables([Entry, FTSEntry])
+    database.create_tables([Entry, FTSEntry, Tag, EntryTag])
     app.run(debug=True, host='0.0.0.0')
 
 # hooo
