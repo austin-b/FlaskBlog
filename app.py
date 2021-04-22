@@ -263,6 +263,17 @@ class FTSEntry(FTSModel):
     class Meta:
         database = database
 
+# Implementing tags using the "Toxi" solution as suggested here:
+# https://stackoverflow.com/a/20871
+class Tag(flask_db.Model):
+
+    title = CharField(unique=True)
+
+class EntryTag(flask_db.Model):
+
+    entry = ForeignKeyField(Entry, backref='tags')
+
+    tag = ForeignKeyField(Tag, backref='entries')
 
 ##################
 # Application Functions
