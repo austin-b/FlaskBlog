@@ -295,6 +295,19 @@ class Tag(flask_db.Model):
 
     title = CharField(unique=True)
 
+    # TODO: add a method to sanaitize tag input
+
+    @classmethod
+    def search(cls, query):
+
+        sanitized_query = re.sub('[^\w]+', '-', query.lower())
+
+        return (Entry
+                .select()
+                .join(EntryTag)
+                .where(EntryTag.tag == Tag.get(Tag.title == sanitized_query))
+                .order_by(Entry.timestamp.desc()) )
+
 class EntryTag(flask_db.Model):
 
     entry = ForeignKeyField(Entry, backref='tags')
@@ -399,8 +412,11 @@ def logout():
 @app.route('/')
 def index():
     search_query = request.args.get('q')
+    tag_search_query = request.args.get('t')
     if search_query:
         query = Entry.search(search_query)
+    elif tag_search_query:
+        query = Tag.search(tag_search_query)
     else:
         query = Entry.public().order_by(Entry.timestamp.desc())
 
