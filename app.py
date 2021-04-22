@@ -6,6 +6,7 @@
 # TODO: add tags to search functionality
 # TODO: add tags to index page
 # TODO: in detail view, make tags link to a search
+# TODO: add about me page
 
 
 
