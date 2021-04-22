@@ -16,6 +16,10 @@
       <input name="published" type="checkbox" value="y" {% block entry_published %}{% endblock %}> Published?
     </label>
     <div class='form-group'>
+      <label for="title">tags</label>
+      <input id="tags" name="tags" type="text" value="{% block entry_tags %}{% endblock %}">
+    </div>
+    <div class='form-group'>
       <button type="submit">{% block save_button %}Create{% endblock %}</button>
       <a href="{% block cancel_button %}{{ url_for('index') }}{% endblock %}">Cancel</a>
     </div>
