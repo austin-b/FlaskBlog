@@ -12,6 +12,7 @@
 
 {% block content %}
   <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %I:%M%p') }}</p>
+  <p>tags: {{ ", ".join(entry.get_tags()) }}</p>
   <div class="entry-detail-content">
     {{ entry.html_content }}
   </div>
