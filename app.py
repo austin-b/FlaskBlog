@@ -4,6 +4,7 @@
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
 # but extended considerably by me.
 #
+# TODO: add tag management (delete, rename, etc)
 
 
 
