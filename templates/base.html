@@ -16,6 +16,7 @@
       <a id='blog-name' href="{{ url_for('index') }}">Thomas<br>Bennett</a>
       <hr>
       <ul>
+        <li><a href="{{ url_for('about_me') }}">about me</a></li>
         {% if session.logged_in %}
         <li><a href="{{ url_for('drafts') }}">drafts</a></li>
         <li><a href="{{ url_for('create') }}">create entry</a></li>

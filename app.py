@@ -423,6 +423,10 @@ def index(q=None, t=None):
     # variable paginate_by
     return object_list('index.html', query, search=search_query)
 
+@app.route('/about/')
+def about_me():
+    return render_template('about_me.html')
+
 @app.route('/drafts/')
 @login_required
 def drafts():
