@@ -1,7 +1,8 @@
 
 #
-# A simple blogging platform based on
+# A simple blogging platform initially based on
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
+# but extended considerably by me.
 #
 
 
