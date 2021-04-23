@@ -14,6 +14,7 @@
     <div class="index-entry-info">
       <p>{{ entry.summary }}</p>
       <p class='index-entry-created'>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+      <p>tags: {% for e in entry.get_tags() %}<a href='{{ url_for('index', t=e) }}'>{{ e }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
     </div>
     {% else %}
     <p>No entries have been created yet.</p>

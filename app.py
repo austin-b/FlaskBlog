@@ -410,9 +410,9 @@ def logout():
     return render_template('logout.html')
 
 @app.route('/')
-def index():
-    search_query = request.args.get('q')
-    tag_search_query = request.args.get('t')
+def index(q=None, t=None):
+    search_query = request.args.get('q') or q
+    tag_search_query = request.args.get('t') or t
     if search_query:
         query = Entry.search(search_query)
     elif tag_search_query:
