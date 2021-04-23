@@ -3,7 +3,6 @@
 # A simple blogging platform based on
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
 #
-# TODO: add about me page
 
 
 
