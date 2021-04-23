@@ -22,8 +22,8 @@ body {
   flex-grow: 1;
   font-family: 'IBM Plex Sans', sans-serif;
   color: var(--text-color);
-  border-radius: 12px;
-  box-shadow: 10px 10px 5px grey;
+  /*border-radius: 12px;
+  box-shadow: 10px 10px 5px grey;*/
 }
 
 a:link {
