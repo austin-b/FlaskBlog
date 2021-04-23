@@ -488,7 +488,7 @@ def upload():
         # code 400 -- bad request
         return {'file_uploaded': False}, 400
 
-@app.route('/tags/', methods=['GET'])
+@app.route('/tags/')
 def list_tags():
     return render_template('tags.html', tags=[t.title for t in Tag.select()])
 
