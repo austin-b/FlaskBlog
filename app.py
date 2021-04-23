@@ -3,6 +3,7 @@
 # A simple blogging platform based on
 # https://charlesleifer.com/blog/how-to-make-a-flask-blog-in-one-hour-or-less/
 #
+# TODO: add about me page
 
 
 
@@ -55,6 +56,7 @@ SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
 
 SITE_WIDTH = 800
 
+# user agent used by blog_entry_uploader.py
 UPLOADER_USER_AGENT = 'tommy/post-uploader'
 
 app = Flask(__name__)
@@ -159,6 +161,28 @@ class Entry(flask_db.Model):
         # returns number of rows modified
         return ret
 
+    def add_tags(self, *args):
+        new_tag_count = 0
+        new_entrytag_count = 0
+        for t in args:
+            # returns a tuple of model instance and boolean showing whether or
+            # not the entry was created
+            (tag, tag_created) = Tag.get_or_create(title = t)
+
+            if tag_created:
+                new_tag_count += 1
+
+            (_, entrytag_created) = EntryTag.get_or_create(entry = self, tag = tag)
+
+            if entrytag_created:
+                new_entrytag_count += 1
+
+        # returning for basic debug
+        return (new_tag_count, new_entrytag_count)
+
+    def get_tags(self):
+        return [tag.tag.title for tag in self.tags]
+
     # creates a basic 100 character summary
     def update_summary(self):
         matches = re.findall('[A-Za-z\s\,\.]+[^<*>]\w+', self.content[:200])
@@ -262,6 +286,30 @@ class FTSEntry(FTSModel):
     class Meta:
         database = database
 
+# Implementing tags using the "Toxi" solution as suggested here:
+# https://stackoverflow.com/a/20871
+class Tag(flask_db.Model):
+
+    title = CharField(unique=True)
+
+    # TODO: add a method to sanaitize tag input
+
+    @classmethod
+    def search(cls, query):
+
+        sanitized_query = re.sub('[^\w]+', '-', query.lower())
+
+        return (Entry
+                .select()
+                .join(EntryTag)
+                .where(EntryTag.tag == Tag.get(Tag.title == sanitized_query))
+                .order_by(Entry.timestamp.desc()) )
+
+class EntryTag(flask_db.Model):
+
+    entry = ForeignKeyField(Entry, backref='tags')
+
+    tag = ForeignKeyField(Tag, backref='entries')
 
 ##################
 # Application Functions
@@ -359,10 +407,13 @@ def logout():
     return render_template('logout.html')
 
 @app.route('/')
-def index():
-    search_query = request.args.get('q')
+def index(q=None, t=None):
+    search_query = request.args.get('q') or q
+    tag_search_query = request.args.get('t') or t
     if search_query:
         query = Entry.search(search_query)
+    elif tag_search_query:
+        query = Tag.search(tag_search_query)
     else:
         query = Entry.public().order_by(Entry.timestamp.desc())
 
@@ -388,6 +439,10 @@ def create():
                 content = request.form['content'],
                 published = request.form.get('published') or False)
             flash('Entry created successfully.', 'success')
+            tags = [t.strip() for t in request.form['tags'].split(',')]
+            (new_tags, new_entrytags) = entry.add_tags(*tags)
+            flash(str(new_tags) + " new tags were created." )
+            flash(str(new_entrytags) + " new entry tag relationships were created." )
             if entry.published:
                 return redirect(url_for('detail', slug=entry.slug))
             else:
@@ -429,6 +484,10 @@ def upload():
         # code 400 -- bad request
         return {'file_uploaded': False}, 400
 
+@app.route('/tags/', methods=['GET'])
+def list_tags():
+    return render_template('tags.html', tags=[t.title for t in Tag.select()])
+
 # in a flask route, anything <> is a variable and is passed on to the
 # function defining the route
 @app.route('/<slug>/')
@@ -452,6 +511,11 @@ def edit(slug):
             entry.published = request.form.get('published') or False
             entry.save()
 
+            tags = [t.strip() for t in request.form['tags'].split(',')]
+            (new_tags, new_entrytags) = entry.add_tags(*tags)
+
+            flash(str(new_tags) + " new tags were created." )
+            flash(str(new_entrytags) + " new entry tag relationships were created." )
             flash('Entry saved successfully.', 'success')
             if entry.published:
                 return redirect(url_for('detail', slug=entry.slug))
@@ -484,7 +548,7 @@ def delete(slug):
 
 def main():
     # create tables if they don't already exist
-    database.create_tables([Entry, FTSEntry])
+    database.create_tables([Entry, FTSEntry, Tag, EntryTag])
     app.run(debug=True, host='0.0.0.0')
 
 # hooo

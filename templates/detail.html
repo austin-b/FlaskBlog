@@ -12,6 +12,8 @@
 
 {% block content %}
   <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %I:%M%p') }}</p>
+  <p>tags: {% for e in entry.get_tags() %}<a href='{{ url_for('index', t=e) }}'>{{ e }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+  <hr>
   <div class="entry-detail-content">
     {{ entry.html_content }}
   </div>
