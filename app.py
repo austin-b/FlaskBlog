@@ -292,7 +292,6 @@ class Tag(flask_db.Model):
 
     title = CharField(unique=True)
 
-    # TODO: add a method to sanaitize tag input
     @classmethod
     def get_or_create(cls, **kwargs):
         if kwargs['title']:
