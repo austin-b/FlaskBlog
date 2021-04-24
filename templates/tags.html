@@ -6,6 +6,10 @@
     <title>Tags</title>
   </head>
   <body>
-    {% for t in tags %}<p>{{t}}</p>{% endfor %}
+    <form id='delete-form' action="{{ url_for('list_tags')}}" method="post">
+        <input id="tag-title" name="tag_title" type="text" value="">
+        <button type="submit">Delete</button>
+    </form>
+    {% for t in tags %}<p>{{ t }}</p>{% endfor %}
   </body>
 </html>

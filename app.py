@@ -181,7 +181,12 @@ class Entry(flask_db.Model):
         return (new_tag_count, new_entrytag_count)
 
     def get_tags(self):
-        return [tag.tag.title for tag in self.tags]
+        try:
+            tags = [tag.tag.title for tag in self.tags]
+        except:
+            tags = []
+        finally:
+            return tags
 
     # creates a basic 100 character summary
     def update_summary(self):
@@ -293,7 +298,8 @@ class Tag(flask_db.Model):
     title = CharField(unique=True)
 
     def delete_instance(self):
-        EntryTag.delete().where(tag.id == self.id)
+        query = EntryTag.delete().where(EntryTag.tag == self)
+        query.execute()
 
         return super(Tag, self).delete_instance()
 
@@ -501,8 +507,11 @@ def upload():
         # code 400 -- bad request
         return {'file_uploaded': False}, 400
 
-@app.route('/tags/')
+@app.route('/tags/', methods=['GET', 'POST'])
 def list_tags():
+    if request.method == 'POST':
+        tag = Tag.get(Tag.title == request.form.get('tag_title'))
+        tag.delete_instance()
     return render_template('tags.html', tags=[t.title for t in Tag.select()])
 
 # in a flask route, anything <> is a variable and is passed on to the
