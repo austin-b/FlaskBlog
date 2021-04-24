@@ -292,6 +292,11 @@ class Tag(flask_db.Model):
 
     title = CharField(unique=True)
 
+    def delete_instance(self):
+        EntryTag.delete().where(tag.id == self.id)
+
+        return super(Tag, self).delete_instance()
+
     @classmethod
     def get_or_create(cls, **kwargs):
         if kwargs['title']:
