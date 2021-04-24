@@ -154,6 +154,8 @@ footer {
   nav {
     position: static;
     margin-left: 10px;
+    padding-left: 0px;
+    width: 90%;
   }
 
   main {
