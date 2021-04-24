@@ -433,8 +433,10 @@ def index(q=None, t=None):
     tag_search_query = request.args.get('t') or t
     if search_query:
         query = Entry.search(search_query)
+        search_title = search_query
     elif tag_search_query:
         query = Tag.search(tag_search_query)
+        search_title = "Tag: " +  tag_search_query
     else:
         query = Entry.public().order_by(Entry.timestamp.desc())
 
@@ -442,7 +444,7 @@ def index(q=None, t=None):
     # and displays them using the template provided
     # by default, it paginates by 20 but this can be specified by a
     # variable paginate_by
-    return object_list('index.html', query, search=search_query)
+    return object_list('index.html', query, search=search_title)
 
 @app.route('/about/')
 def about_me():
