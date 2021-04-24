@@ -35,13 +35,15 @@ from peewee import *
 from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
 from playhouse.sqlite_ext import *
 
+from secret import *
+
 
 ##################
 # Configs
 ##################
 
 # REVIEW: change if not utilizing https
-ADMIN_PASSWORD = 'secret'
+# ADMIN_PASSWORD = 'secret'
 
 # os.path.realpath - Return the canonical path of the specified filename, eliminating any symbolic links encountered in the path
 # __file__ - prints out the file location
@@ -53,7 +55,7 @@ DEBUG = False
 
 # used by flask to encrypt the session cookie
 # random value obtained from os.urandom
-SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
+# SECRET_KEY = b'&iRy\xed{\x1aD\xb8\xef\xbc8\x02\n\xf3\x02"6\xc8~\x82o[\xc9'
 
 SITE_WIDTH = 800
 
