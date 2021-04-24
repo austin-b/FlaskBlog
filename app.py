@@ -87,7 +87,6 @@ oembed_providers = bootstrap_basic(OEmbedCache())
 # Databse Classes
 ##################
 
-# TODO: create and display tags for each entry
 # creates a model class for the entry table
 class Entry(flask_db.Model):
 
@@ -294,17 +293,26 @@ class Tag(flask_db.Model):
     title = CharField(unique=True)
 
     # TODO: add a method to sanaitize tag input
+    @classmethod
+    def get_or_create(cls, **kwargs):
+        if kwargs['title']:
+            kwargs['title'] = Tag.sanitize_query(kwargs['title'])
+        return super(Tag, cls).get_or_create(**kwargs)
 
     @classmethod
     def search(cls, query):
 
-        sanitized_query = re.sub('[^\w]+', '-', query.lower())
+        sanitized_query = Tag.sanitize_query(query)
 
         return (Entry
                 .select()
                 .join(EntryTag)
                 .where(EntryTag.tag == Tag.get(Tag.title == sanitized_query))
                 .order_by(Entry.timestamp.desc()) )
+
+    @staticmethod
+    def sanitize_query(query):
+        return re.sub('[^\w]+', '_', query.lower())
 
 class EntryTag(flask_db.Model):
 
