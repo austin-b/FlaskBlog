@@ -431,12 +431,13 @@ def logout():
 def index(q=None, t=None):
     search_query = request.args.get('q') or q
     tag_search_query = request.args.get('t') or t
+    search_title=None
     if search_query:
         query = Entry.search(search_query)
         search_title = search_query
     elif tag_search_query:
         query = Tag.search(tag_search_query)
-        search_title = "Tag: " +  tag_search_query
+        search_title = "Tag: " + tag_search_query
     else:
         query = Entry.public().order_by(Entry.timestamp.desc())
 
