@@ -55,9 +55,9 @@ hr {
 
 nav {
   margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 15px;
-  min-width: 200px;
+  padding-left: 30px;
+  padding-right: 15px;
+  width: 150px;
   overflow: hidden;
   position: fixed;
 }
@@ -81,7 +81,6 @@ nav ul {
 main {
   margin-top: 20px;
   margin-left: 200px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
