@@ -5,6 +5,8 @@
 # but extended considerably by me.
 #
 # TODO: add tag management (delete, rename, etc)
+# TODO: change search algorithm
+# TODO: add separate section for recipes
 
 
 
