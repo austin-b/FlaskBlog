@@ -7,6 +7,7 @@
 # TODO: add tag management (delete, rename, etc)
 # TODO: change search algorithm
 # TODO: add separate section for recipes
+# TODO: add rss feed capability
 
 
 
