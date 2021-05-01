@@ -501,7 +501,7 @@ def upload():
         file.stream.seek(0)
 
         # do not know if we are currently working on ascii only or on unicode
-        content = file.stream.read().decode('ascii')
+        content = file.stream.read().decode("utf-8")
 
         entry = Entry.create(
             title = title,
