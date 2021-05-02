@@ -126,6 +126,17 @@ img {
 
 .index-entry-title {
   font-family: Merriweather;
+}
+
+.index-entry-title:link {
+  text-decoration: none;
+}
+
+.index-entry-title:hover {
+  text-decoration: none;
+}
+
+.index-entry-title:visited {
   text-decoration: none;
 }
 
