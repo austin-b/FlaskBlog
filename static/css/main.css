@@ -126,6 +126,7 @@ img {
 
 .index-entry-title {
   font-family: Merriweather;
+  text-decoration: none;
 }
 
 .index-entry-info {
