@@ -100,6 +100,10 @@ main {
   max-width: calc(100% - 220px);
 }
 
+img {
+  width: 100%;
+}
+
 .alert {
   background-color: var(--accent);
   border-radius: 5px;
@@ -120,9 +124,6 @@ main {
   overflow-x: auto;
 }
 
-.highlight code * {
-}
-
 .index-entry-title {
   font-family: Merriweather;
 }
@@ -139,19 +140,6 @@ main {
 
 .entry-detail-content {
   text-align: justify;
-}
-
-.entry-detail-content a:link {
-  color: var(--text-color);
-}
-
-.entry-detail-content a:visited {
-  color: var(--text-color);
-}
-
-.entry-detail-content a:hover {
-  text-decoration: none;
-  color: var(--accent);
 }
 
 .form-group {
