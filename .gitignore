@@ -4,3 +4,4 @@ secret.py
 Scripts/
 Lib/
 __pycache__/
+blog.db
