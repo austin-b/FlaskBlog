@@ -8,7 +8,7 @@
 # TODO: change search algorithm
 # TODO: add separate section for recipes
 # TODO: add rss feed capability
-# verify uploaded file filetype
+# TODO: verify uploaded file filetype
 
 
 
